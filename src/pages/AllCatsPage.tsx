@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 
 import { fetchCats } from '../api/catApi';
 import type { CatImage } from '../types/cats';
+import useFavorites from '../hooks/useFavorites';
+import CatGrid from '../components/CatGrid/CatGrid';
 
 export default function AllCatsPages() {
   const [cats, setCats] = useState<CatImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { favorites, toggleFavorite } = useFavorites();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -34,11 +37,10 @@ export default function AllCatsPages() {
   if (error) return <p>Ошибка: {error}</p>;
 
   return (
-    <div>
-      <h2>cats</h2>
-      {cats.map((cat) => (
-        <img key={cat.id} src={cat.url} alt={cat.id} />
-      ))}
-    </div>
+    <CatGrid
+      cats={cats}
+      favorites={favorites}
+      onToggleFavorite={toggleFavorite}
+    />
   );
 }
