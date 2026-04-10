@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 
 import { fetchCats } from '../api/catApi';
 import type { CatImage } from '../types/cats';
+import CatCard from '../components/CatCard/CatCard';
+import useFavorites from '../hooks/useFavorites';
 
 export default function AllCatsPages() {
   const [cats, setCats] = useState<CatImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { favorites, toggleFavorite } = useFavorites();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -37,7 +40,12 @@ export default function AllCatsPages() {
     <div>
       <h2>cats</h2>
       {cats.map((cat) => (
-        <img key={cat.id} src={cat.url} alt={cat.id} />
+        <CatCard
+          key={cat.id}
+          cat={cat}
+          isFavorite={favorites.some((f) => f.id === cat.id)}
+          onToggleFavorite={toggleFavorite}
+        />
       ))}
     </div>
   );
