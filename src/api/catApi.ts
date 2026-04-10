@@ -4,9 +4,11 @@ const BASE_URL = 'https://api.thecatapi.com/v1';
 // не очень актуально для фронтового клиентского приложения, но пусть будет так
 const API_KEY = import.meta.env.VITE_CAT_API_KEY;
 
+export const CATS_PER_PAGE = 15;
+
 export async function fetchCats(
   page: number,
-  limit = 15,
+  limit = CATS_PER_PAGE,
   signal?: AbortSignal,
 ): Promise<CatImage[]> {
   const params = new URLSearchParams({
