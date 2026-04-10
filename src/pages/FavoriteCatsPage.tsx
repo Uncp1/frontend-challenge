@@ -1,5 +1,5 @@
 import CatGrid from '../components/CatGrid/CatGrid';
-import { useFavorites } from '../context/FavoritesContext';
+import useFavorites from '../hooks/useFavorites';
 
 export default function FavoriteCatsPage() {
   const { favorites, toggleFavorite } = useFavorites();

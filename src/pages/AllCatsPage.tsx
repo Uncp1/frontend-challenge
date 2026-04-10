@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react';
 
 import { fetchCats } from '../api/catApi';
-import type { CatImage } from '../types/cats';
-import { useFavorites } from '../context/FavoritesContext';
+import useFavorites from '../hooks/useFavorites';
 import CatGrid from '../components/CatGrid/CatGrid';
+import useCats from '../hooks/useCats';
 
 export default function AllCatsPages() {
-  const [cats, setCats] = useState<CatImage[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { cats, setCats } = useCats();
+  const [loading, setLoading] = useState(cats.length === 0);
   const [error, setError] = useState<string | null>(null);
   const { favorites, toggleFavorite } = useFavorites();
 
   useEffect(() => {
+    if (cats.length > 0) return;
+
     const controller = new AbortController();
 
     async function fetchData() {
