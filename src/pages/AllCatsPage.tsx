@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { fetchCats } from '../api/catApi';
 import type { CatImage } from '../types/cats';
-import useFavorites from '../hooks/useFavorites';
+import { useFavorites } from '../context/FavoritesContext';
 import CatGrid from '../components/CatGrid/CatGrid';
 
 export default function AllCatsPages() {

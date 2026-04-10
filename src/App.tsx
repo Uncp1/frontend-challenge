@@ -1,16 +1,20 @@
-import './App.css';
-import AllCatsPages from './pages/AllCatsPage';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 
-function App() {
+import { FavoritesProvider } from './context/FavoritesContext';
+import Header from './components/Header/Header';
+import AllCatsPage from './pages/AllCatsPage';
+import FavoriteCatsPage from './pages/favoriteCatsPage';
+
+export default function App() {
   return (
-    <>
-      <section>
-        <h1>Hi there, wip</h1>
-
-        <AllCatsPages />
-      </section>
-    </>
+    <HashRouter>
+      <FavoritesProvider>
+        <Header />
+        <Routes>
+          <Route path="/" element={<AllCatsPage />} />
+          <Route path="/favorites" element={<FavoriteCatsPage />} />
+        </Routes>
+      </FavoritesProvider>
+    </HashRouter>
   );
 }
-
-export default App;
