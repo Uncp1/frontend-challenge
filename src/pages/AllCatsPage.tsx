@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { fetchCats } from '../api/catApi';
 import type { CatImage } from '../types/cats';
-import CatCard from '../components/CatCard/CatCard';
 import useFavorites from '../hooks/useFavorites';
+import CatGrid from '../components/CatGrid/CatGrid';
 
 export default function AllCatsPages() {
   const [cats, setCats] = useState<CatImage[]>([]);
@@ -37,16 +37,10 @@ export default function AllCatsPages() {
   if (error) return <p>Ошибка: {error}</p>;
 
   return (
-    <div>
-      <h2>cats</h2>
-      {cats.map((cat) => (
-        <CatCard
-          key={cat.id}
-          cat={cat}
-          isFavorite={favorites.some((f) => f.id === cat.id)}
-          onToggleFavorite={toggleFavorite}
-        />
-      ))}
-    </div>
+    <CatGrid
+      cats={cats}
+      favorites={favorites}
+      onToggleFavorite={toggleFavorite}
+    />
   );
 }
