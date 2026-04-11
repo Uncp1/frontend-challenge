@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { CATS_PER_PAGE, fetchCats } from '../api/catApi';
-import useFavorites from '../hooks/useFavorites';
 import CatGrid from '../components/CatGrid/CatGrid';
+import CatState from '../components/states/CatState';
 import useCats from '../hooks/useCats';
+import useFavorites from '../hooks/useFavorites';
+import { CATS_PER_PAGE, fetchCats } from '../api/catApi';
+import { assetUrl } from '../utils/assetUrl';
 
 export default function AllCatsPages() {
   const { cats, page, hasMore, appendCats } = useCats();
@@ -59,7 +61,20 @@ export default function AllCatsPages() {
     return () => observer.disconnect();
   }, [loading, hasMore, page]);
 
-  if (error) return <p>Ошибка: {error}</p>;
+  if (error)
+    return (
+      <CatState
+        gif={assetUrl('gifs/crying-cat.webp')}
+        message="Что-то пошло не так"
+        action={{
+          label: 'Попробовать снова',
+          onClick: () => {
+            setError(null);
+            loadMore();
+          },
+        }}
+      />
+    );
 
   return (
     <>
@@ -69,8 +84,18 @@ export default function AllCatsPages() {
         onToggleFavorite={toggleFavorite}
       />
       <div ref={sentinelRef} style={{ height: 40 }} />
-      {loading && <p>Загрузка...</p>}
-      {!hasMore && <p>Котики закончились</p>}
+      {loading && (
+        <CatState
+          gif={assetUrl('gifs/loading-cat.webp')}
+          message="Загружаем котиков..."
+        />
+      )}
+      {!hasMore && !loading && cats.length > 0 && (
+        <CatState
+          gif={assetUrl('gifs/crying-cat.webp')}
+          message="Котики закончились"
+        />
+      )}
     </>
   );
 }

@@ -1,0 +1,35 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px 24px;
+  text-align: center;
+}
+
+.gif {
+  width: 256px;
+  height: 256px;
+  border-radius: 4px;
+}
+
+.message {
+  font-size: 18px;
+  color: #555;
+}
+
+.button {
+  padding: 10px 24px;
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.button:hover {
+  background: #1976d2;
+}
