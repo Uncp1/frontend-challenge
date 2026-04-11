@@ -4,18 +4,18 @@ import styles from './CatGrid.module.css';
 
 interface Props {
   cats: CatImage[];
-  favorites: CatImage[];
+  favoriteIds: Set<string>;
   onToggleFavorite: (cat: CatImage) => void;
 }
 
-export default function CatGrid({ cats, favorites, onToggleFavorite }: Props) {
+export default function CatGrid({ cats, favoriteIds, onToggleFavorite }: Props) {
   return (
     <div className={styles.grid}>
       {cats.map((cat) => (
         <CatCard
           key={cat.id}
           cat={cat}
-          isFavorite={favorites.some((f) => f.id === cat.id)}
+          isFavorite={favoriteIds.has(cat.id)}
           onToggleFavorite={onToggleFavorite}
         />
       ))}

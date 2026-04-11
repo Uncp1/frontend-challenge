@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import type { CatImage } from '../../types/cats';
 import HeartIcon from '../icons/HeartIcon';
 import styles from './CatCard.module.css';
@@ -8,7 +10,7 @@ interface Props {
   onToggleFavorite: (cat: CatImage) => void;
 }
 
-export default function CatCard({ cat, isFavorite, onToggleFavorite }: Props) {
+export default memo(function CatCard({ cat, isFavorite, onToggleFavorite }: Props) {
   return (
     <div className={styles.card}>
       <img
@@ -30,4 +32,4 @@ export default function CatCard({ cat, isFavorite, onToggleFavorite }: Props) {
       </button>
     </div>
   );
-}
+});

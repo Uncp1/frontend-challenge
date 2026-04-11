@@ -2,7 +2,7 @@ import CatGrid from '../components/CatGrid/CatGrid';
 import useFavorites from '../hooks/useFavorites';
 
 export default function FavoriteCatsPage() {
-  const { favorites, toggleFavorite } = useFavorites();
+  const { favorites, favoriteIds, toggleFavorite } = useFavorites();
 
   if (favorites.length === 0) {
     return <p>Нет любимых котиков</p>;
@@ -10,7 +10,7 @@ export default function FavoriteCatsPage() {
   return (
     <CatGrid
       cats={favorites}
-      favorites={favorites}
+      favoriteIds={favoriteIds}
       onToggleFavorite={toggleFavorite}
     />
   );

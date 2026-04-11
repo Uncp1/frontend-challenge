@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import type { CatImage } from '../types/cats';
 import { CATS_PER_PAGE } from '../api/catApi';
@@ -13,11 +13,11 @@ export default function CatsProvider({
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
 
-  function appendCats(newCats: CatImage[], nextPage: number) {
+  const appendCats = useCallback((newCats: CatImage[], nextPage: number) => {
     setCats((prev) => [...prev, ...newCats]);
     setPage(nextPage);
     setHasMore(newCats.length === CATS_PER_PAGE);
-  }
+  }, []);
 
   return (
     <CatsContext.Provider value={{ cats, page, hasMore, appendCats }}>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import type { CatImage } from '../types/cats';
 import { FavoritesContext } from './FavoritesContext';
@@ -20,7 +20,7 @@ export default function FavoritesProvider({
 }) {
   const [favorites, setFavorites] = useState<CatImage[]>(getFavorites);
 
-  function toggleFavorite(cat: CatImage) {
+  const toggleFavorite = useCallback((cat: CatImage) => {
     setFavorites((prev) => {
       const next = prev.some((c) => c.id === cat.id)
         ? prev.filter((c) => c.id !== cat.id)
@@ -30,10 +30,12 @@ export default function FavoritesProvider({
 
       return next;
     });
-  }
+  }, []);
+
+  const favoriteIds = new Set(favorites.map((f) => f.id));
 
   return (
-    <FavoritesContext.Provider value={{ favorites, toggleFavorite }}>
+    <FavoritesContext.Provider value={{ favorites, favoriteIds, toggleFavorite }}>
       {children}
     </FavoritesContext.Provider>
   );

@@ -4,6 +4,7 @@ import type { CatImage } from '../types/cats';
 
 interface FavoritesContextValue {
   favorites: CatImage[];
+  favoriteIds: Set<string>;
   toggleFavorite: (cat: CatImage) => void;
 }
 
