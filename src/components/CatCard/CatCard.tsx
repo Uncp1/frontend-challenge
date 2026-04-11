@@ -11,8 +11,15 @@ interface Props {
 export default function CatCard({ cat, isFavorite, onToggleFavorite }: Props) {
   return (
     <div className={styles.card}>
-      <img className={styles.image} src={cat.url} alt={cat.id} />
+      <img
+        className={styles.image}
+        src={cat.url}
+        alt={`Фото милого котика с id ${cat.id}`}
+        loading="lazy"
+        decoding="async"
+      />
       <button
+        type="button"
         className={`${styles.button} ${isFavorite ? styles.active : ''}`}
         onClick={() => onToggleFavorite(cat)}
         aria-label={

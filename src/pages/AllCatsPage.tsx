@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import CatGrid from '../components/CatGrid/CatGrid';
 import CatState from '../components/states/CatState';
@@ -15,7 +15,7 @@ export default function AllCatsPages() {
   const sentinelRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
 
-  async function loadMore() {
+  const loadMore = useCallback(async () => {
     if (loading || !hasMore) return;
 
     abortRef.current?.abort();
@@ -34,7 +34,7 @@ export default function AllCatsPages() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [loading, hasMore, page, appendCats]);
 
   useEffect(() => {
     if (cats.length > 0) return;
@@ -42,7 +42,7 @@ export default function AllCatsPages() {
     loadMore();
 
     return () => abortRef.current?.abort();
-  }, []);
+  }, [cats.length, loadMore]);
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
@@ -59,7 +59,7 @@ export default function AllCatsPages() {
     observer.observe(sentinel);
 
     return () => observer.disconnect();
-  }, [loading, hasMore, page]);
+  }, [loading, hasMore, page, loadMore]);
 
   if (error)
     return (

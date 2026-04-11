@@ -1,10 +1,7 @@
-import { createContext, useState } from 'react';
-import type { CatImage } from '../types/cats';
+import { useState } from 'react';
 
-interface FavoritesContextValue {
-  favorites: CatImage[];
-  toggleFavorite: (cat: CatImage) => void;
-}
+import type { CatImage } from '../types/cats';
+import { FavoritesContext } from './FavoritesContext';
 
 const STORAGE_KEY = 'favorite_cats';
 
@@ -16,11 +13,11 @@ function getFavorites(): CatImage[] {
   }
 }
 
-export const FavoritesContext = createContext<FavoritesContextValue | null>(
-  null,
-);
-
-export function FavoritesProvider({ children }: { children: React.ReactNode }) {
+export default function FavoritesProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [favorites, setFavorites] = useState<CatImage[]>(getFavorites);
 
   function toggleFavorite(cat: CatImage) {
