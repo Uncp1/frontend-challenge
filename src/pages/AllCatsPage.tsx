@@ -93,7 +93,7 @@ export default function AllCatsPages() {
       {!hasMore && !loading && cats.length > 0 && (
         <CatState
           gif={assetUrl('gifs/crying-cat.webp')}
-          message="Котики закончились"
+          message="Котики закончились :("
         />
       )}
     </>
